@@ -14,6 +14,32 @@ const config = {
   measurementId: 'G-J5F0Q2015W'
 };
 
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+  if (!userAuth) return;
+
+  const userRef = firestore.doc(`users/${userAuth.uid}`);
+  const snapShot = await userRef.get();
+
+  if (!snapShot.exists) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        createdAt,
+        ...additionalData
+      });
+    } catch (error) {
+      console.log('error creating user', error.message);
+    }
+  }
+
+  console.log(snapShot);
+  return userRef;
+};
+
 firebase.initializeApp(config);
 
 // We need to export these for use elsewhere...
