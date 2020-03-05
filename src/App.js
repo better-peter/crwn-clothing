@@ -36,7 +36,7 @@ class App extends React.Component {
             // If you need to log this one, it must as a second
             // parameter and function as previous call was asynchronous,
             // and result wont exist before it is executed.
-            // () => {
+            // ,() => {
             //   console.log(this.state);
             // }
           );
