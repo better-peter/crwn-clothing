@@ -1,5 +1,4 @@
 import firebase from 'firebase/app';
-
 import 'firebase/firestore';
 import 'firebase/auth';
 
@@ -10,9 +9,11 @@ const config = {
   projectId: 'c-shop-db',
   storageBucket: 'c-shop-db.appspot.com',
   messagingSenderId: '915217234888',
-  appId: '1:915217234888:web:fb2997eb74b0258b5c9efd',
-  measurementId: 'G-J5F0Q2015W'
+  appId: '1:915217234888:web:fb2997eb74b0258b5c9efd'
+  //measurementId: 'G-J5F0Q2015W'
 };
+
+firebase.initializeApp(config);
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
@@ -23,7 +24,6 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!snapShot.exists) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
-
     try {
       await userRef.set({
         displayName,
@@ -36,11 +36,45 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     }
   }
 
-  //console.log(snapShot);
   return userRef;
 };
 
-firebase.initializeApp(config);
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectionRef = firestore.collection(collectionKey);
+
+  const batch = firestore.batch();
+
+  objectsToAdd.forEach(obj => {
+    const newDocRef = collectionRef.doc();
+    batch.set(newDocRef, obj);
+  });
+
+  await batch.commit();
+};
+
+export const convertCollectionsSnapshotToMap = collectionsSnapshot => {
+  const transformedCollection = collectionsSnapshot.docs.map(docSnapshot => {
+    const { title, items } = docSnapshot.data();
+
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: docSnapshot.id,
+      title,
+      items
+    };
+  });
+  //console.log('(Convert Collections)');
+  //console.log(transformedCollection);
+  return transformedCollection.reduce((accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] = collection;
+    // console.log('accumulator');
+    // console.log(accumulator);
+    return accumulator;
+  }, {});
+};
 
 // We need to export these for use elsewhere...
 export const auth = firebase.auth();

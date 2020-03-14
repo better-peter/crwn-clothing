@@ -8,8 +8,13 @@ export const CollectionItemContainer = styled.div`
   height: 350px;
   align-items: center;
   position: relative;
+  overflow: hidden;
+
   &:hover {
-    .image {
+    & .image {
+      transform: scale(1.6);
+      transition: transform 8s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+
       opacity: 0.8;
     }
     .button {
@@ -17,6 +22,16 @@ export const CollectionItemContainer = styled.div`
       display: flex;
     }
   }
+`;
+
+export const BackgroundImageContainer = styled.div`
+  width: 100%;
+  height: 90%;
+  background-image: ${({ imageUrl }) => `url(${imageUrl})`};
+  background-position: center;
+  background-size: cover;
+  margin-bottom: 5px;
+  z-index: -1;
 `;
 
 export const AddToCartButton = styled(CustomButton)`
@@ -27,48 +42,10 @@ export const AddToCartButton = styled(CustomButton)`
   display: none;
 `;
 
-export const BackgroundImage = styled.div`
-  width: 100%;
-  height: 95%;
-  background-size: cover;
-  background-position: center;
-  margin-bottom: 5px;
-
-  //   min-width: 30%;
-  //   flex: 1 1 auto;
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: center;
-  //   border: 1px solid black;
-
-  //   overflow: hidden;
-  background-image: ${({ imageUrl }) => `url(${imageUrl})`};
-
-  //   &:hover {
-  //     transform: scale(1.9);
-  //     transition: transform 3s cubic-bezier(0.25, 0.45, 0.45, 0.95);
-
-  //     & .content {
-  //       opacity: 0.9;
-  //     }
-  //   }
-
-  //   &.large {
-  //     height: 380px;
-  //   }
-
-  //   &:first-child {
-  //     margin-right: 7.5px;
-  //   }
-
-  //   &:last-child {
-  //     margin-left: 7.5px;
-  //   }
-`;
-
 export const CollectionFooterContainer = styled.div`
   width: 100%;
-  height: 5%;
+  height: 10%;
+  background-color: white;
   display: flex;
   justify-content: space-between;
   font-size: 18px;

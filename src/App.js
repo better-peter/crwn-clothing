@@ -3,10 +3,19 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import {
+  auth,
+  createUserProfileDocument
+  // This code is just for creating collections to database once,
+  // not needed after that
+  // addCollectionAndDocuments
+} from './firebase/firebase.utils';
 
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selectors';
+// This code is just for creating collections to database once,
+// not needed after that
+//    import { selectCollectionsForPreview } from './redux/shop/shop.selectors';
 
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
@@ -22,6 +31,9 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
+    // This code is just for creating collections to database once,
+    // not needed after that
+    //const { setCurrentUser, collectionsArray } = this.props;
     const { setCurrentUser } = this.props;
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
@@ -34,6 +46,12 @@ class App extends React.Component {
         });
       } else {
         setCurrentUser(userAuth);
+        // This code is just for creating collections to database once,
+        // not needed after that
+        // addCollectionAndDocuments(
+        //   'collections',
+        //   collectionsArray.map(({ title, items }) => ({ title, items }))
+        // );
       }
     });
   }
@@ -70,6 +88,9 @@ class App extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
+  // This code is just for creating collections to database once,
+  // not needed after that
+  //collectionsArray: selectCollectionsForPreview
 });
 
 const mapDispatchToProps = dispatch => ({
