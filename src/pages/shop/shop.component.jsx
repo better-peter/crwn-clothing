@@ -27,14 +27,32 @@ class ShopPage extends React.Component {
     const { updateCollections } = this.props;
     const collectionRef = firestore.collection('collections');
 
-    this.unsubscripeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
-      //console.log(snapshot);
+    // OPTION 1: Firebase REST and native fetch
+    // but this a way too deep nested to use in here
+    // better location might be some other database...
+    // fetch(
+    //   'https://firestore.googleapis.com/v1/projects/c-shop-db/databases/(default)/documents/collections'
+    // )
+    //   .then(response => response.json())
+    //   .then(collections => console.log(collections));
+
+    // OPTION 2: Using this promise pattern we get data only when component
+    // mounting, no refresh that is offered with firestore snaphot below
+    collectionRef.get().then(snapshot => {
       const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-      // console.log('(collectionsMap)');
-      // console.log(collectionsMap);
       updateCollections(collectionsMap);
       this.setState({ loading: false });
     });
+
+    // OPTION 3: This one is original that uses firebase functionality...
+    // this.unsubscripeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
+    //   //console.log(snapshot);
+    //   const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+    //   // console.log('(collectionsMap)');
+    //   // console.log(collectionsMap);
+    //   updateCollections(collectionsMap);
+    //   this.setState({ loading: false });
+    // });
   }
 
   render() {

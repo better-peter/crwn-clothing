@@ -54,6 +54,7 @@ class App extends React.Component {
         // );
       }
     });
+    // we could have error handling as well:     }, error => console.log(error));
   }
 
   componentWillUnmount() {
