@@ -8,6 +8,7 @@ export const MenuItemContainer = styled.div`
   align-items: center;
   justify-content: center;
   border: 1px solid black;
+  border-radius: 20px;
   margin: 0 7.5px 15px;
   overflow: hidden;
 

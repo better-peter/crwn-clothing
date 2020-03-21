@@ -8,6 +8,7 @@ export const CollectionItemContainer = styled.div`
   height: 350px;
   align-items: center;
   position: relative;
+  border-radius: 10px;
   overflow: hidden;
 
   &:hover {
