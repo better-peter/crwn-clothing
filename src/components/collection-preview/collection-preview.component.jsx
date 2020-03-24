@@ -30,6 +30,6 @@ const CollectionPreview = ({ title, items }) => {
 
 export default CollectionPreview;
 
-{
-  /* <Link className='title' to=`/shop/${{title.toUpperCase()} </Link> */
-}
+//{
+/* <Link className='title' to=`/shop/${{title.toUpperCase()} </Link> */
+//}

@@ -9,16 +9,18 @@ const INITIAL_STATE = {
 
 const cartReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case CartActionTypes.TOGGLE_CART_VISIBILITY:
-      return {
-        ...state,
-        hidden: !state.hidden
-      };
     case CartActionTypes.ADD_ITEM:
       return {
         ...state,
         cartItems: addItemToCart(state.cartItems, action.payload)
       };
+
+    case CartActionTypes.CLEAR_CART:
+      return {
+        ...state,
+        cartItems: []
+      };
+
     case CartActionTypes.CLEAR_ITEM_FROM_CART:
       return {
         ...state,
@@ -26,10 +28,17 @@ const cartReducer = (state = INITIAL_STATE, action) => {
           cartItem => cartItem.id !== action.payload.id
         )
       };
+
     case CartActionTypes.REMOVE_ITEM:
       return {
         ...state,
         cartItems: removeItemFromCart(state.cartItems, action.payload)
+      };
+
+    case CartActionTypes.TOGGLE_CART_VISIBILITY:
+      return {
+        ...state,
+        hidden: !state.hidden
       };
 
     default:
