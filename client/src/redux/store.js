@@ -8,6 +8,7 @@ import rootReducer from './root-reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
+// This will remove logging from final version:
 const middlewares = [sagaMiddleware];
 if (process.env.NODE_ENV === 'development') {
   middlewares.push(logger);
